@@ -11,13 +11,27 @@ buildscript {
     }
 }
 
-allprojects {
+plugins {
+    id 'com.diffplug.spotless' version '5.7.0'
+}
+
+apply {
+    from(rootProject.file("spotless/spotless.gradle"))
+}
+
+subprojects {
     repositories {
         google()
         mavenCentral()
     }
-}
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            // Treat all Kotlin warnings as errors
+            allWarningsAsErrors = true
+            jvmTarget = "1.8"
+        }
+    }
+
+    apply plugin: 'com.diffplug.spotless'
 }

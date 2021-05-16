@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2021 by Qifan YANG (@underwindfall)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.qifan.fontmetrics
 
 import android.content.Context
@@ -13,9 +28,11 @@ import android.view.View
  * an example to introduce u how to use font metrics
  */
 class FontMetricsView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-    //pixel size
+    // pixel size
     private val DEFAULT_TEXT_SIZE = 200
     private val STROKE_SIZE = 5F
 
@@ -82,7 +99,6 @@ class FontMetricsView @JvmOverloads constructor(
         mRectPaint.style = Paint.Style.STROKE
     }
 
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
@@ -95,10 +111,10 @@ class FontMetricsView @JvmOverloads constructor(
         var stopX = measuredWidth.toFloat()
         var stopY = 0f
 
-        //draw text
-        canvas.drawText(mText, startX, startY, mTextPaint)// x=0, y=0
+        // draw text
+        canvas.drawText(mText, startX, startY, mTextPaint) // x=0, y=0
 
-        //draw lines
+        // draw lines
         startX = 0f
         if (mIsTopVisible) {
             startY = mTextPaint.fontMetrics.top
@@ -133,7 +149,7 @@ class FontMetricsView @JvmOverloads constructor(
 
         if (mIsBoundsVisible) {
 
-            mTextPaint.getTextBounds(mText, 0, mText.length, mBounds);
+            mTextPaint.getTextBounds(mText, 0, mText.length, mBounds)
             val dx = paddingLeft.toFloat()
             canvas.drawRect(
                 mBounds.left + dx,
@@ -147,10 +163,10 @@ class FontMetricsView @JvmOverloads constructor(
         if (mIsWidthVisible) {
             // get measured width
             val width = mTextPaint.measureText(mText)
-            //get bounding with so that we can compare them
+            // get bounding with so that we can compare them
             mTextPaint.getTextBounds(mText, 0, mText.length, mBounds)
             // draw vertical line just before the left bounds
-            //TODO need to fix this ?
+            // TODO need to fix this ?
             startX = paddingLeft + mBounds.left - (width - mBounds.left) / 2
             stopX = startX
             startY = -verticalAdjustment
@@ -162,7 +178,6 @@ class FontMetricsView @JvmOverloads constructor(
             canvas.drawLine(startX, startY, stopX, stopY, mMeasuredWidthPaint)
         }
     }
-
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
